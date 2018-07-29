@@ -1,0 +1,91 @@
+#+TITLE: Environment Descriptor for the Blind
+
+* What is this?
+This contains almost all of the code for the final year project, titled /Environment Descriptor for the Visually Impaired/.
+
+In this, we have code to produce captions based on neural networks, along with a server which utilizes this functionality, and clients both commandline and web clients, for the raspberry pi.
+
+* Folders
+Here's what each of the folders underneath contains:
+
+ + ~server/~ : Contains all the neural network code, along with the server running code
+ + ~server/captions_ref~ : Contains all the neural network code.
+ + ~client_cmdline/~ : Contains the commandline client code for the Raspberry Pi
+ + ~client_webui/~ : Contains the web ui client code for the Raspberry Pi.
+* Requirements
+** Hardware
+We use only use a Raspberry Pi 3 Model B for the hardware, along with PiCamera Rev 1.3. For the python API's you can read more about it [[https://picamera.readthedocs.io/en/release-1.13/install.html][here]].
+
+Note: You'll require the Python 3 editions of the libraries, which can be installed on the raspberry pi either by:
+
+#+BEGIN_SRC sh
+sudo pip3 install picamera
+#+END_SRC
+
+or as distro packages
+
+#+BEGIN_SRC sh
+sudo apt  install python3-picamera
+#+END_SRC
+
+** Software
+This project uses Python 3 exclusively, and has only been tested on Python 3.6 on a Anaconda distribution. For each of the various parts of the code, we utilize various libraries, which can be found in each folder's ~requirements.txt~ , thus to install each of the dependencies, you could do a:
+
+#+BEGIN_SRC sh
+pip3 install -r requirements.txt
+#+END_SRC
+
+or if you wish to install a full list of dependencies at one time, here's a commandline one liner:
+
+#+BEGIN_SRC sh
+pip3 install tensorflow opencv-python numpy pandas tqdm matplotlib gTTS pydub flask
+#+END_SRC
+
+* Running
+
+** Neural Network
+First step is to build the model, for this the MS COCO Caption dataset was used exclusively. For training, you need to download the dataset from: http://cocodataset.org/#download Specifically, the Train, Val sets from 2014, along with their annotations.
+
+For training you need to put  ~captions_train2014.json~ and the images to ~server/captions_ref/train/~ . For validation, you need to put  ~captions_val2014.json~ and the images to ~server/captions_ref/val/~ .
+
+For starting training, go to the folder ~server/captions_ref/~, and run:
+
+#+BEGIN_SRC sh
+python main.py --phase=train \
+    --load \
+    --model_file='./models/xxxxxx.npy'\
+    [--train_cnn]
+#+END_SRC
+
+
+A pretrained model is provided along with this code.
+
+*Note:* It has to be extracted before running the code. It can be found here:
+
+~http://www.mediafire.com/file/mp42dg14xla8j5a/models.zip/file~
+
+Extract it into that folder: ~./server/captions_ref/models/~ i.e. you should have .npy, .json, and .txt in within that folder.
+
+** Server and Client
+This is one of the more complicated ones, but in our setup, we had static IP addresses for the Neural Network hosting server, and the raspberry pi, specifically, the server was on ~192.168.1.11~ and the raspberry pi on ~192.168.1.101~. To run this, you'll either need to setup these your environment as so, or modify the values for these in the following files:
+
+ + ~client_cmdline/pi_config.py~ : Modify the ~SERVER_URL~ value to the appropriate IP address of the server.
+ + ~client_webui/static/app.js~ : Modify the values of following three variables, ~client_url~, ~server_url~,  ~client_tts~ to the appropriate IP addresses where the raspberry pi is the client.
+
+Once all that is setup, on the server system, run:
+
+#+BEGIN_SRC sh
+python3 server.py
+#+END_SRC
+
+on the client in the webui folder run:
+
+#+BEGIN_SRC sh
+python3 server.py
+#+end_src
+
+or for the command line version run:
+
+#+BEGIN_SRC sh
+python3 pi_client.py
+#+end_src

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<title> Pi-Caption-Client </title>
+	<link rel="stylesheet" href="../static/vendor/skin-blue.min.css">
+	<link rel="stylesheet" href="../static/vendor/AdminLTE.min.css">
+	<link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../static/app.css">
+	<script src="../static/vendor/jquery.min.js"></script>
+	<!-- <link rel="stylesheet" href="../static/font-awesome-4.5.0/css/font-awesome.min.css"> <!-- Maybe not needed? -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<meta name="theme-color" content="#367fa9">
+    </head>
+    <body class="skin-blue layout-boxed">
+	<div class="wrapper">
+	    <header class="main-header">
+		<nav class="navbar navbar-static-top" role="navigation">
+		    <div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+			    <li><a style="pointer-events:none;"><samp>raspberrypi</samp></a></li>
+			    <li><a style="pointer-events:none;"><samp><b>Pi-Caption-Client</b></samp></a></li>
+			</ul>
+		    </div>
+		</nav>
+	    </header>
+	    <div class ="content-wrapper" style="min-height: 600px; margin-left:0">
+		<section id="wrapper" class="content">
+		    <div class="row">
+			<div class="col-half-center col-md-4">
+                            <button type="button" id="confirm-start" class="btn btn-success form-control">Single Capture</button>
+                        </div>
+			<div class="col-half-center col-md-4">
+                            <button type="button" id="confirm-start-loop" class="btn btn-warning form-control">Start Capture Loop</button>
+                        </div>
+			<div class="col-half-center col-md-4">
+                            <button type="button" id="confirm-stop" class="btn btn-danger form-control">Stop Capture Loop</button>
+                        </div>
+			<div class="checkbox">
+			    <label><input id="offline" type="checkbox"> Offline TTS?</label>
+			</div>
+		    </div>
+		    <div id="content">
+		    </div>
+		</section>
+	    </div>
+	</div>
+	<script src="../static/app.js"></script>
+    </body>
+</html>
