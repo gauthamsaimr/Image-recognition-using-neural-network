@@ -89,3 +89,5 @@ or for the command line version run:
 #+BEGIN_SRC sh
 python3 pi_client.py
 #+end_src
+* Demo
+[[https://raw.githubusercontent.com/TheAntimist/env_desc/master/screencast/screencast.gif]]
